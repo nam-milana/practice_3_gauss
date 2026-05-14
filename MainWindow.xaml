@@ -1,0 +1,145 @@
+<Window x:Class="GaussIntegral.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вычисление интеграла методом Гаусса (3 точки)"
+        Width="500" Height="420"
+        MinWidth="400" MinHeight="380"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F4F4">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <!-- Заголовок -->
+            <RowDefinition Height="Auto"/>
+            <!-- Поля ввода -->
+            <RowDefinition Height="Auto"/>
+            <!-- Кнопки -->
+            <RowDefinition Height="Auto"/>
+            <!-- Прогресс-бар и статус -->
+            <RowDefinition Height="Auto"/>
+            <!-- Результат -->
+            <RowDefinition Height="Auto"/>
+            <!-- Сообщение об ошибке -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ── ЗАГОЛОВОК ──────────────────────────────────────── -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Определённый интеграл"
+                       FontSize="18" FontWeight="Bold" Foreground="#222"/>
+            <TextBlock Text="Составная квадратура Гаусса–Лежандра, 3 точки"
+                       FontSize="12" Foreground="#666" Margin="0,2,0,0"/>
+            <Separator Margin="0,10,0,0"/>
+        </StackPanel>
+
+        <!-- ── ПОЛЯ ВВОДА ─────────────────────────────────────── -->
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Нижний предел -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Нижний предел a"
+                           FontSize="12" Foreground="#444" Margin="0,0,0,4"/>
+                <TextBox x:Name="TbLower"
+                         Text="0"
+                         Padding="6,5"
+                         FontSize="13"
+                         BorderBrush="#AAAAAA"
+                         BorderThickness="1"/>
+            </StackPanel>
+
+            <!-- Верхний предел -->
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Верхний предел b"
+                           FontSize="12" Foreground="#444" Margin="0,0,0,4"/>
+                <TextBox x:Name="TbUpper"
+                         Text="0.9"
+                         Padding="6,5"
+                         FontSize="13"
+                         BorderBrush="#AAAAAA"
+                         BorderThickness="1"/>
+            </StackPanel>
+
+            <!-- Количество разбиений -->
+            <StackPanel Grid.Column="4">
+                <TextBlock Text="Число разбиений N"
+                           FontSize="12" Foreground="#444" Margin="0,0,0,4"/>
+                <TextBox x:Name="TbSegments"
+                         Text="200"
+                         Padding="6,5"
+                         FontSize="13"
+                         BorderBrush="#AAAAAA"
+                         BorderThickness="1"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ── КНОПКИ ─────────────────────────────────────────── -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    Margin="0,0,0,16" HorizontalAlignment="Left">
+            <Button x:Name="BtnCompute"
+                    Content="Вычислить"
+                    Width="120" Height="32"
+                    FontSize="13"
+                    Click="BtnCompute_Click"/>
+            <Button x:Name="BtnCancel"
+                    Content="Отмена"
+                    Width="90" Height="32"
+                    FontSize="13"
+                    IsEnabled="False"
+                    Margin="10,0,0,0"
+                    Click="BtnCancel_Click"/>
+        </StackPanel>
+
+        <!-- ── ПРОГРЕСС-БАР И СТАТУС ─────────────────────────── -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,14">
+            <ProgressBar x:Name="PbProgress"
+                         Height="16"
+                         Minimum="0" Maximum="100" Value="0"
+                         Margin="0,0,0,6"/>
+            <TextBlock x:Name="TbStatus"
+                       Text="Ожидание запуска..."
+                       FontSize="12" Foreground="#555"/>
+        </StackPanel>
+
+        <!-- ── РЕЗУЛЬТАТ ──────────────────────────────────────── -->
+        <Border Grid.Row="4"
+                x:Name="ResultPanel"
+                Visibility="Collapsed"
+                Background="White"
+                BorderBrush="#CCCCCC"
+                BorderThickness="1"
+                Padding="14,10"
+                Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Результат:"
+                           FontSize="12" Foreground="#555" Margin="0,0,0,4"/>
+                <TextBlock x:Name="TbResult"
+                           FontSize="20" FontWeight="Bold"
+                           Foreground="#1A1A1A" FontFamily="Consolas"/>
+                <TextBlock x:Name="TbResultMeta"
+                           FontSize="11" Foreground="#888"
+                           FontFamily="Consolas" Margin="0,6,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ── ОШИБКА ─────────────────────────────────────────── -->
+        <Border Grid.Row="5"
+                x:Name="ErrorPanel"
+                Visibility="Collapsed"
+                Background="#FFF3F3"
+                BorderBrush="#FFAAAA"
+                BorderThickness="1"
+                Padding="12,8">
+            <TextBlock x:Name="TbError"
+                       FontSize="12" Foreground="#CC0000"
+                       TextWrapping="Wrap"/>
+        </Border>
+
+    </Grid>
+</Window>
